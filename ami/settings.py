@@ -27,7 +27,7 @@ ALGORITHM = my_settings.ALGORITHM
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', '10.58.2.83', '10.58.2.83:8000']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
