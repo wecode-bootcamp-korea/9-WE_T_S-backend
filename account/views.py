@@ -24,6 +24,7 @@ class AccountSignUpView(View):
     def post(self, request):
         data = json.loads(request.body)
         try:
+            validate_email(data['email'])
             if Account.objects.filter(email=data['email']).exists():
                 return JsonResponse({'message' : 'ALREADY_EXISTS'}, status=401)
 
