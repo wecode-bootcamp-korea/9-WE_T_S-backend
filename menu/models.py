@@ -4,10 +4,11 @@ class Menu(models.Model):
     name = models.CharField(max_length=50)
 
     class Meta:
-        dt_table = 'menus'
+        db_table = 'menus'
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    menu = models.ManyToManyField(Menu, through = 'MenuCategory')
 
     class Meta:
         db_table = 'categories'
@@ -20,7 +21,8 @@ class MenuCategory(models.Model):
         db_table = 'menu_categories'
 
 class TypeName(models.Model):
-    name = models.CharField(max_length=50)
+    name          = models.CharField(max_length=50)
+    menu_category = models.ManyToManyField('MenuCategory', through = 'CategoryType') 
 
     class Meta:
         db_table = 'type_names'
