@@ -27,7 +27,7 @@ ALGORITHM = my_settings.ALGORITHM
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', '10.58.0.55', '10.58.0.55:8000']
+ALLOWED_HOSTS = ['*', '10.58.2.83', '10.58.2.83:8000']
 
 
 # Application definition
@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'corsheaders',
-	'account',
+    'corsheaders',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -46,8 +46,8 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'ami.urls'
