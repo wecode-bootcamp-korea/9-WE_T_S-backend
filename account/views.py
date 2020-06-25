@@ -7,22 +7,22 @@ from ami.settings import SECRET_KEY, ALGORITHM
 from .models import Account, Guest
 
 class AccountSignUpView(View):
-    def post(self, request):
-        data = json.loads(request.bddy)
-        try:
-            if Account.objects.filter(email=data['email']).exists():
-                return JsonResponse({'message':'INVALID_EMAIL'}, status=401)
-            else:
-                hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
-                Account.objects.create(
-                    first_name = data['first_name'],
-                    last_name  = data['last_name'],
-                    email      = data['email'],
-                    password  = hashed_password.decode('utf-8')
-                )
-                return HttpResponse(status=200)
-        except KeyError:
-            return JsonResponse({'message':'INVALID_KEY'}, status=400)
+	def post(self, request):
+		data = json.loads(request.body)
+		try:
+			if Account.objects.filter(email=data['email']).exists():
+				return JsonResponse({'message':'INVALID_EMAIL'}, status=401)
+			else:
+				hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+				Account.objects.create(
+					first_name = data['first_name'],
+					last_name  = data['last_name'],
+					email 	   = data['email'],
+					password   = hashed_password.decode('utf-8')
+				)
+				return HttpResponse(status=200)
+		except KeyError:
+			return JsonResponse({'message':'INVALID_KEY'}, status=400)
 
 class AccountSignInView(View):
     def post(self, request):
@@ -45,6 +45,8 @@ class GuestSignUpView(View):
 		try:
 			if Guest.objects.filter(email=data['email']).exists():
 				return JsonResponse({'message':'INVALID_EMAIL'}, status=401)
+			elif Account.objects.filter(email=data['email']).exists():
+				return JsonResponse({'message':'ALREADY_EXISTS'}, status=401)
 			else:
 				Guest.objects.create(email = data['email'])
 				return HttpResponse(status=200)
