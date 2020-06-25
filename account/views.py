@@ -7,7 +7,6 @@ from django.http import (
     HttpResponse,
     JsonResponse
 )
-from django.db import IntegrityError
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
