@@ -1,8 +1,5 @@
 from django.db import models
 
-from menu.models import TypeName
-
-
 class ProductSize(models.Model):
     size      = models.CharField(max_length=10)
 
@@ -15,7 +12,7 @@ class Product(models.Model):
     created_at   = models.DateTimeField(auto_now_add=True)
     guide        = models.CharField(max_length=500, null=True)
     product_size = models.ForeignKey('ProductSize', on_delete=models.CASCADE)
-    type_name    = models.ForeignKey('TypeName', on_delete=models.CASCADE)
+    type_name    = models.ForeignKey('menu.TypeName', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'products'
@@ -28,7 +25,7 @@ class Color(models.Model):
         db_table = 'colors'
 
 class ProductColor(models.Model):
-    color   = models.ForeignKey('Colors', on_delete=models.CASCADE)
+    color   = models.ForeignKey('Color', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
 
     class Meta:
