@@ -1,4 +1,5 @@
 from django.db import models
+
 from account.models import Guest, Account
 from product.models import Product
 
@@ -12,9 +13,9 @@ class Order(models.Model):
     cart_bag     = models.IntegerField()
     address      = models.CharField(max_length=400)
     created_at   = models.DateTimeField(auto_now_add=True)
-    guest        = models.ForeignKey('Guest',on_delete=models.SET_NULL, null=True)
-    account      = models.ForeignKey('Account', on_delete=models.SET_NULL, null=True)
-    order_status = models.ForeignKey('OrderStatus', on_delete=models.SET_NULL, null=True)
+    guest        = models.ForeignKey('Guest',on_delete=models.CASCADE)
+    account      = models.ForeignKey('Account', on_delete=models.CASCADE)
+    order_status = models.ForeignKey('OrderStatus', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'orders'
