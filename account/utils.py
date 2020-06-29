@@ -14,8 +14,8 @@ def login_required(func):
             return JsonResponse({'message' : 'INVALID_TOKEN'}, status=400)
 
         try:
-            user_id = jwt.decode(access_token, SECRET_KEY, ALGORITHM)
-            user = Account.objects.get(id=user_id['id'])
+            user_id      = jwt.decode(access_token, SECRET_KEY, ALGORITHM)
+            user         = Account.objects.get(id=user_id['id'])
             request.user = user
 
             return func(self, request, *args, **kwargs)
