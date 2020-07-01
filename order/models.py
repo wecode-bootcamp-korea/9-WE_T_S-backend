@@ -31,4 +31,3 @@ class CartWishlist(models.Model):
 
     class Meta:
         db_table = 'cart_wishlists'
-
