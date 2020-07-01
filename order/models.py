@@ -1,8 +1,5 @@
 from django.db import models
 
-from account.models import Guest, Account
-from product.models import Product
-
 class OrderStatus(models.Model):
     status = models.IntegerField()
 
@@ -13,8 +10,8 @@ class Order(models.Model):
     cart_bag     = models.IntegerField()
     address      = models.CharField(max_length=400)
     created_at   = models.DateTimeField(auto_now_add=True)
-    guest        = models.ForeignKey('Guest',on_delete=models.CASCADE)
-    account      = models.ForeignKey('Account', on_delete=models.CASCADE)
+    guest        = models.ForeignKey('account.Guest',on_delete=models.CASCADE)
+    account      = models.ForeignKey('account.Account', on_delete=models.CASCADE)
     order_status = models.ForeignKey('OrderStatus', on_delete=models.CASCADE)
 
     class Meta:
@@ -22,15 +19,15 @@ class Order(models.Model):
 
 class OrderProduct(models.Model):
     order    = models.ForeignKey('Order', on_delete=models.SET_NULL, null=True)
-    product  = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
-    quantity = models.IntegerField()
+    product  = models.ForeignKey('product.Product', on_delete=models.SET_NULL, null=True)
+    quantity = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'order_products'
 
 class CartWishlist(models.Model):
-    product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
-    account = models.ForeignKey('Account', on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey('product.Product', on_delete=models.SET_NULL, null=True)
+    account = models.ForeignKey('account.Account', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         db_table = 'cart_wishlists'

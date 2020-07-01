@@ -1,7 +1,7 @@
 from django.db import models
 
 class ProductSize(models.Model):
-    size = models.CharField(max_length=10)
+    size = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'product_sizes'

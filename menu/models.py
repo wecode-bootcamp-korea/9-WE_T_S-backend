@@ -8,14 +8,14 @@ class Menu(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    menu = models.ManyToManyField(Menu, through = 'MenuCategory')
+    menu = models.ManyToManyField('Menu', through = 'MenuCategory')
 
     class Meta:
         db_table = 'categories'
 
 class MenuCategory(models.Model):
-    menu     = models.ForeignKey('Menu', on_delete=models.CASCADE, default = 1)
-    category = models.ForeignKey('Category', on_delete=models.CASCADE, default = 1)
+    menu     = models.ForeignKey('Menu', on_delete=models.CASCADE, default = '')
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, default = '')
 
     class Meta:
         db_table = 'menu_categories'
@@ -28,8 +28,8 @@ class TypeName(models.Model):
         db_table = 'type_names'
 
 class CategoryType(models.Model):
-    category  = models.ForeignKey('MenuCategory', on_delete=models.CASCADE, default = 1)
-    type_name = models.ForeignKey('TypeName', on_delete=models.CASCADE, default = 1)
+    category  = models.ForeignKey('MenuCategory', on_delete=models.CASCADE, default = '')
+    type_name = models.ForeignKey('TypeName', on_delete=models.CASCADE, default = '')
 
     class Meta:
         db_table = 'category_types'
