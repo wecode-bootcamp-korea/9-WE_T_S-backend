@@ -10,7 +10,7 @@ class Order(models.Model):
     cart_bag     = models.IntegerField()
     address      = models.CharField(max_length=400)
     created_at   = models.DateTimeField(auto_now_add=True)
-    guest        = models.ForeignKey('account.Guest',on_delete=models.CASCADE)
+    guest        = models.ForeignKey('account.Guest', on_delete=models.CASCADE)
     account      = models.ForeignKey('account.Account', on_delete=models.CASCADE)
     order_status = models.ForeignKey('OrderStatus', on_delete=models.CASCADE)
 
