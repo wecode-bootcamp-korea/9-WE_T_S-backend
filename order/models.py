@@ -11,7 +11,7 @@ class Order(models.Model):
     address      = models.CharField(max_length=400)
     created_at   = models.DateTimeField(auto_now_add=True)
     guest        = models.ForeignKey('account.Guest', on_delete=models.CASCADE)
-    account      = models.ForeignKey('account.Account', on_delete=models.CASCADE)
+    account      = models.ForeignKey('account.Account', on_delete=models.SET_NULL, null=True)
     order_status = models.ForeignKey('OrderStatus', on_delete=models.CASCADE)
 
     class Meta:
@@ -26,7 +26,7 @@ class OrderProduct(models.Model):
         db_table = 'order_products'
 
 class CartWishlist(models.Model):
-    product = models.ForeignKey('product.Product', on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey('product.ProductColor', on_delete=models.SET_NULL, null=True)
     account = models.ForeignKey('account.Account', on_delete=models.SET_NULL, null=True)
 
     class Meta:
