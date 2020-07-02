@@ -8,7 +8,7 @@ class Menu(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    menu = models.ManyToManyField(Menu, through = 'MenuCategory')
+    menu = models.ManyToManyField('Menu', through = 'MenuCategory')
 
     class Meta:
         db_table = 'categories'
