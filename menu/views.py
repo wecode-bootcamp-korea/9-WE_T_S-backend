@@ -14,17 +14,11 @@ from .models import (
 class CategoryView(View):
     def get(self, request):
         try:
-            category_list = []
-            menus = Menu.objects.prefetch_related('menucategory_set')
-            for menu in menus:
-                categories = menu.menucategory_set.all()
-                for category in categories:
-                    category_id   = category.category_id
-                    category_name = Category.objects.get(id = category_id).name
-                    category_list.append({
-                        'category_id' : category_id,
-                        'category_name' : category_name
-                    })
+            menus = Menu.objects.prefetch_related('menucategory_set__category')
+            category_list = [{
+                'category_id' : category.category_id,
+                'category_name' : category.category.name
+            } for menu in menus for category in menu.menucategory_set.all()]
             return JsonResponse({'category_list' : category_list}, status=200)
 
         except Category.DoesNotExist:
