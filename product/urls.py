@@ -5,8 +5,6 @@ from .views import (
     DetailView
 )
 
-from .models import ProductColor
-
 urlpatterns = [
     path('product/list', ListView.as_view()),
     path('product/<slug:req_product_id>/color/<slug:req_color_id>', DetailView.as_view()),
