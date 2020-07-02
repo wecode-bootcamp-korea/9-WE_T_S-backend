@@ -27,7 +27,7 @@ ALGORITHM = my_settings.ALGORITHM
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', '10.58.1.198', '10.58.1.198:8000']
 
 
 # Application definition
@@ -77,7 +77,6 @@ WSGI_APPLICATION = 'ami.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = my_settings.DATABASES
-   
 
 
 # Password validation
