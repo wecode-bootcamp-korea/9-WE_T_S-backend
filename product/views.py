@@ -63,7 +63,7 @@ class DetailView(View):
                 product_info["product_size"]     = [size for size in item.product.product_size.size.split(',')]
                 product_info["button_colors"]    = [colors.color.name for colors in ProductColor.objects.filter(
                                                                                 product_id = item.product.id)]
-                product_info["button_images"]    = [button.color.button_color for button in ProductColor.objects.filte
+                product_info["button_images"]    = [button.color.button_color for button in ProductColor.objects.filter(
                                                                                             product_id = item.product.id)
                                                                                             ]
                 product_info["product_images"]   = [image.image_url for image in ProductImage.objects.filter(
