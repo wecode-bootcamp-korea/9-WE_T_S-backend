@@ -21,40 +21,39 @@ from product.models import (
 from account.utils  import login_required
 
 class LikeProductView(View):
-    # @login_required
+    @login_required
     def get(self, request):
 
         account_wish_product = CartWishlist.objects.filter(account__id = request.user.id)
-        # account_wish_product = CartWishlist.objects.filter(account__id = 1)
+        # account_wish_product = CartWishlist.objects.filter(account__id = 6)
         #account_id에 대한 product들을 values_list를 사용하여 list형식으로 만든다.
-        product_list = CartWishlist.objects.select_related(
+        wishlists = account_wish_product.select_related(
             'product', 
             'product__product',
             'product__color',
-            'product__product__productsize'
+            'product__product__product_size'
             ).prefetch_related('product__productimage_set')
         # product_id_list = account_wish_product.values_list("product", flat=True).distinct()
-        wish_list = [{
-            "product_id"        : product.product.id,
-            "image"             : product.product_set.first().image_url,
-            "name"              : product.product.name,
-            "price"             : product.product.price,
-            "color"             : product.product.color.name,
-            "size"              : product.product.product_size.size.split(',')
-        } for product in product_list]
-        return JsonResponse({'wish_list':wish_list}, status=200)
+        wishlist_detail = [{
+            "product_id"        : wishlist.product.product.id,
+            "image"             : wishlist.product.productimage_set.first().image_url,
+            "name"              : wishlist.product.product.name,
+            "price"             : wishlist.product.product.price,
+            "color"             : wishlist.product.color.name,
+            "size"              : [size.strip() for size in wishlist.product.product.product_size.size.split(',')]
+        } for wishlist in wishlists]
+        return JsonResponse({'wish_list':wishlist_detail}, status=200)
     
-    # @login_required
+    @login_required
     def post(self,request):
+        print('--------------------------------------')
         data = json.loads(request.body)
-        account_wish_product = CartWishlist.objcets.filter(account = request.user.id)
         try:
-            if not CartWishlist.objects.filter(product = data['product_id']).exists():
-                CartWishlist.objects.create(
-                    account_id = account_wish_product,
-                    product_id = data['product_id']
-                )
-                return HttpResponse(status=200)
+            CartWishlist.objects.create(
+                account_id = request.user.id,
+                product_id = data['product_id']
+            )
+            return HttpResponse(status=200)
 
         except KeyError:
             return JsonResponse({'message' : 'INVALID_KEY'}, status=400)
@@ -64,14 +63,9 @@ class LikeProductView(View):
     @login_required
     def delete(self,request):
         data = json.loads(request.body)
-        wish_product = CartWishlist.objcets.filter(account = request.user.id)
         try:
-            if CartWishlist.objects.filter(product = data['product_id']).exists():
-                CartWishlist.objects.get().delete(
-                    account_id = request.user.id,
-                    product_id = data['product_id']
-                )
-                return HttpResponse(status=200)
+            CartWishlist.objects.get(account_id = request.user.id, product_id = data['product_id']).delete()
+            return HttpResponse(status=200)
 
         except KeyError:
             return JsonResponse({'message' : 'INVALID_KEY'}, status=400)
