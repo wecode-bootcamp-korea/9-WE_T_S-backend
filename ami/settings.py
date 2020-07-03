@@ -29,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*', '10.58.7.16', '10.58.7.16:8000']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -78,7 +77,6 @@ WSGI_APPLICATION = 'ami.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = my_settings.DATABASES
-   
 
 
 # Password validation

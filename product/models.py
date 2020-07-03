@@ -18,8 +18,9 @@ class Product(models.Model):
         db_table = 'products'
 
 class Color(models.Model):
-    name    = models.CharField(max_length=100)
-    product = models.ManyToManyField('Product', through = 'ProductColor')
+    name         = models.CharField(max_length=500)
+    button_color = models.URLField(max_length=2000, default = '')
+    product      = models.ManyToManyField('Product', through = 'ProductColor')
 
     class Meta:
         db_table = 'colors'
@@ -33,7 +34,7 @@ class ProductColor(models.Model):
 
 class ProductImage(models.Model):
     image_url     = models.URLField(max_length=2000)
-    product_color = models.ForeignKey('ProductColor', on_delete=models.CASCADE)
+    product_color = models.ForeignKey('ProductColor', on_delete=models.CASCADE, default = '')
 
     class Meta:
         db_table = 'product_images'
