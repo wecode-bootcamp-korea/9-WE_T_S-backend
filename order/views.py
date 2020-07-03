@@ -25,15 +25,13 @@ class LikeProductView(View):
     def get(self, request):
 
         account_wish_product = CartWishlist.objects.filter(account__id = request.user.id)
-        # account_wish_product = CartWishlist.objects.filter(account__id = 6)
-        #account_id에 대한 product들을 values_list를 사용하여 list형식으로 만든다.
         wishlists = account_wish_product.select_related(
             'product', 
             'product__product',
             'product__color',
             'product__product__product_size'
             ).prefetch_related('product__productimage_set')
-        # product_id_list = account_wish_product.values_list("product", flat=True).distinct()
+            
         wishlist_detail = [{
             "product_id"        : wishlist.product.product.id,
             "image"             : wishlist.product.productimage_set.first().image_url,
@@ -47,7 +45,7 @@ class LikeProductView(View):
     @login_required
     def post(self,request):
         data = json.loads(request.body)
-        print(request)
+        print("start")
         try:
             CartWishlist.objects.create(
                 account_id = request.user.id,
