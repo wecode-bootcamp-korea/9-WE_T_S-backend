@@ -46,8 +46,8 @@ class LikeProductView(View):
     
     @login_required
     def post(self,request):
-        print('--------------------------------------')
         data = json.loads(request.body)
+        print(request)
         try:
             CartWishlist.objects.create(
                 account_id = request.user.id,

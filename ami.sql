@@ -31,7 +31,7 @@ CREATE TABLE `accounts` (
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,37 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+INSERT INTO `accounts` VALUES (1,'광오','노','shrhkddh@naver.com','$2b$12$dnYEEx8F2T9KXMxwghQ.5Ozrl6005GaaDWMiJ7SXkLWUB3KyoLT6i','2020-07-03 03:47:01.576828','2020-07-03 03:47:01.577195');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cart_wishlists`
+--
+
+DROP TABLE IF EXISTS `cart_wishlists`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart_wishlists` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `account_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cart_wishlists_account_id_0b9094c3_fk_accounts_id` (`account_id`),
+  KEY `cart_wishlists_product_id_a0b31a82_fk_product_colors_id` (`product_id`),
+  CONSTRAINT `cart_wishlists_account_id_0b9094c3_fk_accounts_id` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`),
+  CONSTRAINT `cart_wishlists_product_id_a0b31a82_fk_product_colors_id` FOREIGN KEY (`product_id`) REFERENCES `product_colors` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart_wishlists`
+--
+
+LOCK TABLES `cart_wishlists` WRITE;
+/*!40000 ALTER TABLE `cart_wishlists` DISABLE KEYS */;
+INSERT INTO `cart_wishlists` VALUES (1,1,1);
+/*!40000 ALTER TABLE `cart_wishlists` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -134,7 +164,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +173,7 @@ CREATE TABLE `django_content_type` (
 
 LOCK TABLES `django_content_type` WRITE;
 /*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` VALUES (8,'account','account'),(9,'account','guest'),(1,'contenttypes','contenttype'),(3,'menu','category'),(4,'menu','categorytype'),(5,'menu','menu'),(6,'menu','menucategory'),(7,'menu','typename'),(10,'product','color'),(11,'product','product'),(12,'product','productcolor'),(14,'product','productimage'),(13,'product','productsize'),(2,'sessions','session');
+INSERT INTO `django_content_type` VALUES (8,'account','account'),(9,'account','guest'),(1,'contenttypes','contenttype'),(3,'menu','category'),(4,'menu','categorytype'),(5,'menu','menu'),(6,'menu','menucategory'),(7,'menu','typename'),(18,'order','cartwishlist'),(15,'order','order'),(17,'order','orderproduct'),(16,'order','orderstatus'),(10,'product','color'),(11,'product','product'),(12,'product','productcolor'),(14,'product','productimage'),(13,'product','productsize'),(2,'sessions','session');
 /*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +190,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,7 +199,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'account','0001_initial','2020-06-30 05:01:21.355672'),(2,'contenttypes','0001_initial','2020-06-30 05:01:21.373393'),(3,'contenttypes','0002_remove_content_type_name','2020-06-30 05:01:21.395167'),(4,'menu','0001_initial','2020-06-30 05:01:21.475010'),(5,'menu','0002_auto_20200625_1324','2020-06-30 05:01:21.679522'),(6,'menu','0003_auto_20200628_0502','2020-06-30 05:01:21.802878'),(7,'product','0001_initial','2020-06-30 05:01:21.874623'),(8,'product','0002_auto_20200626_0651','2020-06-30 05:01:21.929668'),(9,'product','0003_auto_20200626_0904','2020-06-30 05:01:22.101985'),(10,'product','0004_auto_20200627_0350','2020-06-30 05:01:22.108389'),(11,'product','0005_auto_20200627_0833','2020-06-30 05:01:22.117074'),(12,'product','0006_color_button_url','2020-06-30 05:01:22.130976'),(13,'product','0007_auto_20200628_1104','2020-06-30 05:01:22.141001'),(14,'product','0008_thumnail','2020-06-30 05:01:22.152916'),(15,'product','0009_delete_thumnail','2020-06-30 05:01:22.170095'),(16,'product','0010_auto_20200629_0420','2020-06-30 05:01:22.213974'),(17,'product','0011_auto_20200629_1458','2020-06-30 05:01:22.259159'),(18,'sessions','0001_initial','2020-06-30 05:01:22.266522');
+INSERT INTO `django_migrations` VALUES (1,'account','0001_initial','2020-06-30 05:01:21.355672'),(2,'contenttypes','0001_initial','2020-06-30 05:01:21.373393'),(3,'contenttypes','0002_remove_content_type_name','2020-06-30 05:01:21.395167'),(4,'menu','0001_initial','2020-06-30 05:01:21.475010'),(5,'menu','0002_auto_20200625_1324','2020-06-30 05:01:21.679522'),(6,'menu','0003_auto_20200628_0502','2020-06-30 05:01:21.802878'),(7,'product','0001_initial','2020-06-30 05:01:21.874623'),(8,'product','0002_auto_20200626_0651','2020-06-30 05:01:21.929668'),(9,'product','0003_auto_20200626_0904','2020-06-30 05:01:22.101985'),(10,'product','0004_auto_20200627_0350','2020-06-30 05:01:22.108389'),(11,'product','0005_auto_20200627_0833','2020-06-30 05:01:22.117074'),(12,'product','0006_color_button_url','2020-06-30 05:01:22.130976'),(13,'product','0007_auto_20200628_1104','2020-06-30 05:01:22.141001'),(14,'product','0008_thumnail','2020-06-30 05:01:22.152916'),(15,'product','0009_delete_thumnail','2020-06-30 05:01:22.170095'),(16,'product','0010_auto_20200629_0420','2020-06-30 05:01:22.213974'),(17,'product','0011_auto_20200629_1458','2020-06-30 05:01:22.259159'),(18,'sessions','0001_initial','2020-06-30 05:01:22.266522'),(19,'product','0004_auto_20200630_0735','2020-07-03 03:49:39.446415'),(20,'order','0001_initial','2020-07-03 03:49:39.552737'),(21,'account','0002_account_product','2020-07-03 03:49:39.706314'),(22,'order','0002_auto_20200701_0729','2020-07-03 03:49:40.008879'),(23,'account','0003_auto_20200702_1202','2020-07-03 03:49:40.026940'),(24,'menu','0003_auto_20200630_0257','2020-07-03 03:49:40.247242'),(25,'menu','0004_merge_20200703_0319','2020-07-03 03:49:40.250002'),(26,'order','0003_auto_20200702_1202','2020-07-03 03:49:40.476486'),(27,'order','0004_auto_20200703_0319','2020-07-03 03:49:40.646305'),(28,'product','0012_merge_20200703_0319','2020-07-03 03:49:40.648595');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,6 +303,92 @@ LOCK TABLES `menus` WRITE;
 /*!40000 ALTER TABLE `menus` DISABLE KEYS */;
 INSERT INTO `menus` VALUES (1,'Man');
 /*!40000 ALTER TABLE `menus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_products`
+--
+
+DROP TABLE IF EXISTS `order_products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_products` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `quantity` int NOT NULL,
+  `order_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `order_products_order_id_b5077dc2_fk_orders_id` (`order_id`),
+  KEY `order_products_product_id_3110c998_fk_products_id` (`product_id`),
+  CONSTRAINT `order_products_order_id_b5077dc2_fk_orders_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  CONSTRAINT `order_products_product_id_3110c998_fk_products_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_products`
+--
+
+LOCK TABLES `order_products` WRITE;
+/*!40000 ALTER TABLE `order_products` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_products` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_status`
+--
+
+DROP TABLE IF EXISTS `order_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order_status` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `status` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `order_status`
+--
+
+LOCK TABLES `order_status` WRITE;
+/*!40000 ALTER TABLE `order_status` DISABLE KEYS */;
+/*!40000 ALTER TABLE `order_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cart_bag` int NOT NULL,
+  `address` varchar(400) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `account_id` int DEFAULT NULL,
+  `guest_id` int DEFAULT NULL,
+  `order_status_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `orders_account_id_92f83327_fk_accounts_id` (`account_id`),
+  KEY `orders_guest_id_fcb3bbfe_fk_guests_id` (`guest_id`),
+  KEY `orders_order_status_id_05e726df_fk_order_status_id` (`order_status_id`),
+  CONSTRAINT `orders_account_id_92f83327_fk_accounts_id` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`),
+  CONSTRAINT `orders_guest_id_fcb3bbfe_fk_guests_id` FOREIGN KEY (`guest_id`) REFERENCES `guests` (`id`),
+  CONSTRAINT `orders_order_status_id_05e726df_fk_order_status_id` FOREIGN KEY (`order_status_id`) REFERENCES `order_status` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `orders`
+--
+
+LOCK TABLES `orders` WRITE;
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -421,4 +537,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-07-03 10:11:29
+-- Dump completed on 2020-07-03 12:54:05
