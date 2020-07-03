@@ -24,17 +24,11 @@ class ListView(View):
                 "product_price"   : int(item.product.price),
                 "product_color"   : item.color.name,
                 "button_colors"   : [colors.color.name for colors in ProductColor.objects.filter(
-                                                                     product_id = item.product.id)
-                                                                     ],
+                                     product_id = item.product.id)],
                 "button_image"    : item.color.button_color,
                 "button_images"   : [button.color.button_color for button in ProductColor.objects.filter(
-                                                                             product_id = item.product.id)
-                                                                             ],
-                "product_images"  : [image.image_url for image in ProductImage.objects.filter(
-                                                                  product_color = ProductColor.objects.get(
-                                                                  color = Color.objects.get(id = item.color.id),
-                                                                  product = Product.objects.get(id = item.product.id)))
-                                                                  ]
+                                     product_id = item.product.id)],
+                "product_images" : [image.image_url for image in item.productimage_set.all()]
                 } for item in product_list]
 
             return JsonResponse({"product_data" : product_info}, status = 200)
@@ -52,10 +46,8 @@ class DetailView(View):
                 return HttpResponse(status = 404)
 
             product_detail   = ProductColor.objects.prefetch_related(
-                                                                    "color").filter(
-                                                                    color_id = req_color_id).prefetch_related(
-                                                                    "product").filter(
-                                                                    product_id = req_product_id)
+                               "color").filter(color_id = req_color_id).prefetch_related(
+                               "product").filter(product_id = req_product_id)
 
             for item in product_detail:
                 product_info = {
@@ -67,18 +59,13 @@ class DetailView(View):
                         "product_color_id" : item.color.id,
                         "product_size"     : [size for size in item.product.product_size.size.split(',')],
                         "button_colors"    : [colors.color.name for colors in ProductColor.objects.filter(
-                                                                              product_id = item.product.id)
-                                                                              ],
+                                              product_id = item.product.id)],
                         "button_images"    : [button.color.button_color for button in ProductColor.objects.filter(
-                                                                                      product_id = item.product.id)
-                                                                                      ],
+                                              product_id = item.product.id)],
                         "product_images"   : [image.image_url for image in ProductImage.objects.filter(
-                                                                        product_color = ProductColor.objects.get(
-                                                                        color = Color.objects.get(id = item.color.id),
-                                                                        product = Product.objects.get(
-                                                                        id = item.product.id)
-                                                                        ))
-                                                                        ]
+                                              product_color = ProductColor.objects.get(
+                                              color = Color.objects.get(id = item.color.id),
+                                              product = Product.objects.get(id = item.product.id)))]
                         }
 
             return JsonResponse({"product_data" : product_info}, status = 200)
