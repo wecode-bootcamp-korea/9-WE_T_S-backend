@@ -1,4 +1,4 @@
-from .models import *
+import json
 
 from django.views import View
 from django.http import (
@@ -6,7 +6,12 @@ from django.http import (
         HttpResponse
 )
 
-import json
+from .models import (
+        ProductColor,
+        ProductImage,
+        Color,
+        Product
+)
 
 class ListView(View):
     def get(self, request):
@@ -51,28 +56,30 @@ class DetailView(View):
                                                                     color_id = req_color_id).prefetch_related(
                                                                     "product").filter(
                                                                     product_id = req_product_id)
-            product_info = dict()
 
             for item in product_detail:
-                product_info["sub_sub_category"] = item.product.type_name.name
-                product_info["product_name"]     = item.product.name
-                product_info["product_price"]    = int(item.product.price)
-                product_info["product_guide"]    = [guide for guide in item.product.guide.split(',')]
-                product_info["product_color"]    = item.color.name
-                product_info["product_color_id"] = item.color.id
-                product_info["product_size"]     = [size for size in item.product.product_size.size.split(',')]
-                product_info["button_colors"]    = [colors.color.name for colors in ProductColor.objects.filter(
-                                                                                product_id = item.product.id)]
-                product_info["button_images"]    = [button.color.button_color for button in ProductColor.objects.filter(
-                                                                                            product_id = item.product.id)
-                                                                                            ]
-                product_info["product_images"]   = [image.image_url for image in ProductImage.objects.filter(
+                product_info = {
+                        "sub_sub_category" : item.product.type_name.name,
+                        "product_name"     : item.product.name,
+                        "product_price"    : int(item.product.price),
+                        "product_guide"    : [guide for guide in item.product.guide.split(',')],
+                        "product_color"    : item.color.name,
+                        "product_color_id" : item.color.id,
+                        "product_size"     : [size for size in item.product.product_size.size.split(',')],
+                        "button_colors"    : [colors.color.name for colors in ProductColor.objects.filter(
+                                                                              product_id = item.product.id)
+                                                                              ],
+                        "button_images"    : [button.color.button_color for button in ProductColor.objects.filter(
+                                                                                      product_id = item.product.id)
+                                                                                      ],
+                        "product_images"   : [image.image_url for image in ProductImage.objects.filter(
                                                                         product_color = ProductColor.objects.get(
                                                                         color = Color.objects.get(id = item.color.id),
                                                                         product = Product.objects.get(
                                                                         id = item.product.id)
                                                                         ))
                                                                         ]
+                        }
 
             return JsonResponse({"product_data" : product_info}, status = 200)
 

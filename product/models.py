@@ -18,9 +18,9 @@ class Product(models.Model):
         db_table = 'products'
 
 class Color(models.Model):
-    name    = models.CharField(max_length=500)
+    name         = models.CharField(max_length=500)
     button_color = models.URLField(max_length=2000, default = '')
-    product = models.ManyToManyField('Product', through = 'ProductColor')
+    product      = models.ManyToManyField('Product', through = 'ProductColor')
 
     class Meta:
         db_table = 'colors'
